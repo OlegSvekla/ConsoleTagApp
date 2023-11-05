@@ -1,6 +1,6 @@
-﻿using SimpleChat.Core.Entities;
+﻿using ConsoleTagApp.Domain.Entities;
 
-namespace SimpleChat.Core.Interfaces.IRepositories
+namespace ConsoleTagApp.Domain.Interfaces.IRepositories
 {
     public interface IUserRepository : IBaseRepository<User>
     {
