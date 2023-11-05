@@ -11,6 +11,11 @@ namespace ConsoleTagApp.Domain.Interfaces.IRepositories
 {
     public interface IBaseRepository<T> where T : BaseEntity
     {
+        IQueryable<T> GetOneByAsyncWithPagin(
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            Expression<Func<T, bool>> expression = null,
+            CancellationToken cancellationToken = default);
+
         Task<IEnumerable<T>> GetAllByAsync(Func<IQueryable<T>,
             IIncludableQueryable<T, object>>? include = null,
             Expression<Func<T, bool>>? expression = null,

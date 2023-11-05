@@ -16,11 +16,6 @@ namespace ConsoleTagApp.Infrastructure.EntitiesConfiguration
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Name).IsRequired();
             builder.Property(u => u.Domain).IsRequired();
-
-            builder.HasMany(u => u.TagsToUser)
-                .WithOne(tu => tu.User)
-                .HasForeignKey(tu => tu.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -12,16 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleTagApp.Bl\ConsoleTagApp.Bl.csproj" />
     <ProjectReference Include="..\ConsoleTagApp.Domain\ConsoleTagApp.Domain.csproj" />
     <ProjectReference Include="..\ConsoleTagApp.Infrastructure\ConsoleTagApp.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <EditorConfigFiles Remove="C:\Users\olegs\source\repos\OlegSvekla\ConsoleTagApp\ConsoleTagApp\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="C:\Users\olegs\source\repos\OlegSvekla\ConsoleTagApp\ConsoleTagApp\.editorconfig" />
   </ItemGroup>
 
 </Project>

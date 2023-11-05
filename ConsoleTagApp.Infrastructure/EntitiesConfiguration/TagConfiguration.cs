@@ -14,11 +14,9 @@ namespace ConsoleTagApp.Infrastructure.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<Tag> builder)
         {
             builder.HasKey(t => t.Id);
+
             builder.Property(t => t.Value).IsRequired();
             builder.Property(t => t.Domain).IsRequired();
-
-            builder.HasMany(t => t.Users)
-                .WithMany();
         }
     }
 }

@@ -23,6 +23,26 @@ namespace ConsoleTagApp.Infrastructure.Data.Repositories
             _table = _dbContext.Set<T>();
         }
 
+        public IQueryable<T> GetOneByAsyncWithPagin(
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            Expression<Func<T, bool>> expression = null,
+            CancellationToken cancellationToken = default)
+        {
+            IQueryable<T> query = _table;
+
+            if (expression is not null)
+            {
+                query = query.Where(expression);
+            }
+
+            if (include is not null)
+            {
+                query = include(query);
+            }
+
+            return query.AsNoTracking();
+        }
+
         public async Task<IEnumerable<T>> GetAllByAsync(Func<IQueryable<T>,
             IIncludableQueryable<T, object>> include = null,
             Expression<Func<T, bool>> expression = null,

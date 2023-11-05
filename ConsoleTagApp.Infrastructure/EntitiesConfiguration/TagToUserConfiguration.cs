@@ -9,19 +9,36 @@ using System.Threading.Tasks;
 
 namespace ConsoleTagApp.Infrastructure.EntitiesConfiguration
 {
-    public class TagToUserConfiguration : IEntityTypeConfiguration<TagToUser>
+    public class TagToUserConfiguration : IEntityTypeConfiguration<UserTag>
     {
-        public void Configure(EntityTypeBuilder<TagToUser> builder)
+        public void Configure(EntityTypeBuilder<UserTag> builder)
         {
-            builder.HasKey(tu => tu.Id);
+            //builder.HasKey(tu => tu.Id);
 
-            builder.HasOne(tu => tu.User)
-                .WithMany(u => u.TagsToUser)
-                .HasForeignKey(tu => tu.UserId);
+            //builder.HasOne(tu => tu.User)
+            //    .WithMany(u => u.TagsToUser)
+            //    .HasForeignKey(tu => tu.UserId);
 
-            builder.HasOne(tu => tu.Tags)
-                .WithMany()
-                .HasForeignKey(tu => tu.TagId);
+            //builder.HasOne(tu => tu.Tags)
+            //    .WithMany()
+            //    .HasForeignKey(tu => tu.TagId);
+
+            builder
+                .HasKey(ur => new { ur.UserId, ur.TagId });
+
+            builder
+                .HasOne(ur => ur.User)
+                .WithMany(u => u.UserTags)
+                .HasForeignKey(ur => ur.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(ur => ur.Tag)
+                .WithMany(r => r.UserTags)
+                .HasForeignKey(ur => ur.TagId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
+
+
     }
 }

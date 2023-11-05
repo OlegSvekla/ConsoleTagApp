@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ConsoleTagApp.Domain.Entities
 {
-    public class TagToUser : BaseEntity
+    public class UserTag
     {
         public Guid UserId { get; set; }
         public User? User { get; set; }
 
         public Guid TagId { get; set; }
-        public List<Tag>? Tags { get; set; }
+        public Tag? Tag { get; set; }
     }
 }
