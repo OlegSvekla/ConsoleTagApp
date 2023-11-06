@@ -5,10 +5,8 @@ using ConsoleTagApp.Domain.Interfaces.IServices;
 using ConsoleTagApp.Extensions;
 using ConsoleTagApp.Infrastructure.Data;
 using ConsoleTagApp.Infrastructure.Data.Repositories;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace ConsoleTagApp
 {
@@ -23,7 +21,7 @@ namespace ConsoleTagApp
                 .AddScoped<IUserService<User>, UserService>()
                 .AddDbContext<ConsoleDbContext>(options =>
                 {
-                    options.UseSqlServer("ConsoleTagAppDbConnection").LogTo(Console.WriteLine, LogLevel.Information);
+                    options.UseSqlServer("ConsoleTagAppDbConnection");
                 })
                 .BuildServiceProvider();
 
