@@ -2,10 +2,13 @@
 using ConsoleTagApp.Domain.Entities;
 using ConsoleTagApp.Domain.Interfaces.IRepositories;
 using ConsoleTagApp.Domain.Interfaces.IServices;
+using ConsoleTagApp.Extensions;
 using ConsoleTagApp.Infrastructure.Data;
 using ConsoleTagApp.Infrastructure.Data.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace ConsoleTagApp
 {
@@ -17,24 +20,33 @@ namespace ConsoleTagApp
                 .AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>))
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<IMessageReader, MessageReader>()
-                .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<IUserService<User>, UserService>()
                 .AddDbContext<ConsoleDbContext>(options =>
                 {
-                    options.UseSqlServer("ConsoleTagAppDbConnection");
+                    options.UseSqlServer("ConsoleTagAppDbConnection").LogTo(Console.WriteLine, LogLevel.Information);
                 })
                 .BuildServiceProvider();
 
             using var scope = serviceProvider.CreateScope();
             var userService = scope.ServiceProvider.GetRequiredService<IUserService<User>>();
             var messageReader = scope.ServiceProvider.GetRequiredService<IMessageReader>();
+            //var context = scope.ServiceProvider.GetRequiredService<ConsoleDbContext>();
+
+            MigrationsConfiguration.RunDbContextMigrations(serviceProvider);
 
             while (true)
             {
+                //Console.WriteLine("Select an action:");
+                //Console.WriteLine("1. Get user by Id and Domain");
+                //Console.WriteLine("2. Get users by Domain with pagination");
+                //Console.WriteLine("3. Get users by tag and Domain");
+                //Console.WriteLine("0. Exit");
+
                 Console.WriteLine("Select an action:");
-                Console.WriteLine("1. Get user by Id and Domain");
-                Console.WriteLine("2. Get users by Domain with pagination");
-                Console.WriteLine("3. Get users by tag and Domain");
+                Console.WriteLine("1. Read messages from a file");
+                Console.WriteLine("2. Get user by Id and Domain");
+                Console.WriteLine("3. Get users by Domain with pagination");
+                Console.WriteLine("4. Get users by tag and Domain");
                 Console.WriteLine("0. Exit");
 
                 string choice = Console.ReadLine();
@@ -46,6 +58,43 @@ namespace ConsoleTagApp
                 switch (choice)
                 {
                     case "1":
+                        Console.WriteLine("Drop a text file here and press Enter:");
+
+                        // Пользователь сбрасывает файл в консоль
+                        string filePath = Console.ReadLine();
+
+                        if (File.Exists(filePath))
+                        {
+                            using (FileStream fileStream = File.OpenRead(filePath))
+                            {
+                                while (true)
+                                {
+                                    // Здесь вы можете использовать messageReader для чтения сообщений из файла
+                                    var message = messageReader.ReadMessage(fileStream, (byte)'\n' );
+                                    if (message == null)
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        //foreach (var item in message)
+                                        //{
+                                        //    Console.WriteLine(item);
+                                        //}
+                                        Console.WriteLine(message);
+                                    }
+
+                                    // Остальной код для обработки сообщения
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("File not found. Please make sure the file exists and try again.");
+                        }
+
+                        break;
+                    case "2":
                         Console.WriteLine("Enter user Id:");
                         if (Guid.TryParse(Console.ReadLine(), out Guid userId))
                         {
@@ -66,7 +115,7 @@ namespace ConsoleTagApp
                             Console.WriteLine("Invalid user Id.");
                         }
                         break;
-                    case "2":
+                    case "3":
                         Console.WriteLine("Enter Domain:");
                         string domainUser2 = Console.ReadLine();
                         Console.WriteLine("Enter page:");
@@ -98,7 +147,7 @@ namespace ConsoleTagApp
                             Console.WriteLine("Invalid page number.");
                         }
                         break;
-                    case "3":
+                    case "4":
                         Console.WriteLine("Enter tag value:");
                         string tagValue = Console.ReadLine();
                         Console.WriteLine("Enter Domain:");

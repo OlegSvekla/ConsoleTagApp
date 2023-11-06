@@ -8,6 +8,6 @@ namespace ConsoleTagApp.Domain.Interfaces.IServices
 {
     public interface IMessageReader
     {
-        public string ReadMessage();
+        public string ReadMessage(Stream stream, byte delimiter);
     }
 }
