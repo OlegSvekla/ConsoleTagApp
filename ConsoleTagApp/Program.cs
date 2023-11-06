@@ -5,15 +5,41 @@ using ConsoleTagApp.Domain.Interfaces.IServices;
 using ConsoleTagApp.Extensions;
 using ConsoleTagApp.Infrastructure.Data;
 using ConsoleTagApp.Infrastructure.Data.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace ConsoleTagApp
 {
     class Program
     {
+        //public class ConsoleDbContextFactory : IDesignTimeDbContextFactory<ConsoleDbContext>
+        //{
+        //    public ConsoleDbContext CreateDbContext(string[] args)
+        //    {
+        //        IConfigurationRoot configuration = new ConfigurationBuilder()
+        //            .SetBasePath(Directory.GetCurrentDirectory())
+        //            .AddJsonFile("appsettings.json")
+        //            .Build();
+
+        //        var optionsBuilder = new DbContextOptionsBuilder<ConsoleDbContext>();
+        //        var connectionString = configuration.GetConnectionString("ConsoleTagAppDbConnection");
+        //        optionsBuilder.UseSqlServer(connectionString);
+
+        //        return new ConsoleDbContext(optionsBuilder.Options);
+        //    }
+        //}
+
         static void Main(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json")
+    .Build();
+
             var serviceProvider = new ServiceCollection()
                 .AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>))
                 .AddScoped<IUserRepository, UserRepository>()
@@ -21,7 +47,11 @@ namespace ConsoleTagApp
                 .AddScoped<IUserService<User>, UserService>()
                 .AddDbContext<ConsoleDbContext>(options =>
                 {
-                    options.UseSqlServer("ConsoleTagAppDbConnection");
+                    options.UseSqlServer(configuration.GetConnectionString("ConsoleTagAppDbConnection"));
+                })
+                .AddLogging(builder =>
+                {
+                    builder.AddConsole(); // или другой поставщик журналов
                 })
                 .BuildServiceProvider();
 
@@ -29,8 +59,9 @@ namespace ConsoleTagApp
             var userService = scope.ServiceProvider.GetRequiredService<IUserService<User>>();
             var messageReader = scope.ServiceProvider.GetRequiredService<IMessageReader>();
             //var context = scope.ServiceProvider.GetRequiredService<ConsoleDbContext>();
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-            MigrationsConfiguration.RunDbContextMigrations(serviceProvider);
+            MigrationsConfiguration.RunDbContextMigrations(serviceProvider/*, logger*/);
 
             while (true)
             {

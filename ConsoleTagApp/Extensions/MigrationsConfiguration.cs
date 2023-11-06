@@ -9,25 +9,24 @@ namespace ConsoleTagApp.Extensions
 {
     public static class MigrationsConfiguration
     {
-        public static async Task<IServiceProvider> RunDbContextMigrations(IServiceProvider app)
+        public static async Task<IServiceProvider> RunDbContextMigrations(IServiceProvider app/*, ILogger logger*/)
         {
             using (var scope = app.CreateScope())
             {
                 var serviceProvider = scope.ServiceProvider;
-                var logger = serviceProvider.GetRequiredService<ILogger<ConsoleDbContextSeed>>();
 
-                logger.LogInformation("Database migration running...");
+                //logger.LogInformation("Database migration running...");
 
                 try
                 {
                     var context = serviceProvider.GetRequiredService<ConsoleDbContext>();
                     context.Database.Migrate();
 
-                    await ConsoleDbContextSeed.SeedAsyncData(context, logger);
+                    await ConsoleDbContextSeed.SeedAsyncData(context /*logger*/);
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "An error occurred while seeding the database.");
+                    //logger.LogError(ex, "An error occurred while seeding the database.");
                 }
             }
             return app;

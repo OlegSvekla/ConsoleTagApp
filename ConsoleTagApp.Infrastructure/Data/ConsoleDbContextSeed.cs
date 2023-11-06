@@ -7,13 +7,13 @@ namespace ConsoleTagApp.Infrastructure.Data
 {
     public class ConsoleDbContextSeed
     {
-        public static async Task SeedAsyncData(ConsoleDbContext context, ILogger logger, int retry = 0)
+        public static async Task SeedAsyncData(ConsoleDbContext context/*, ILogger logger*/, int retry = 0)
         {
             var retryForAvailbility = retry;
 
             try
             {
-                logger.LogInformation("Data seeding started.");
+                //logger.LogInformation("Data seeding started.");
 
                 //if (!await context.Tags.AnyAsync())
                 //{
@@ -34,8 +34,8 @@ namespace ConsoleTagApp.Infrastructure.Data
                 {
                     retryForAvailbility++;
 
-                    logger.LogError(ex.Message);
-                    await SeedAsyncData(context, logger, retryForAvailbility);
+                    //logger.LogError(ex.Message);
+                    await SeedAsyncData(context, /*logger,*/ retryForAvailbility);
                 }
                 throw;
             }
