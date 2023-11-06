@@ -7,25 +7,15 @@ namespace ConsoleTagApp.Infrastructure.Data
 {
     public class ConsoleDbContextSeed
     {
-        public static async Task SeedAsyncData(ConsoleDbContext context/*, ILogger logger*/, int retry = 0)
+        public static async Task SeedAsyncData(ConsoleDbContext context, int retry = 0)
         {
             var retryForAvailbility = retry;
 
             try
             {
-                //logger.LogInformation("Data seeding started.");
-
-                //if (!await context.Tags.AnyAsync())
-                //{
-                //    await context.Tags.AddRangeAsync(GetPreConfiguredTags());
-
-                //    await context.SaveChangesAsync();
-                //}
                 if (!await context.Users.AnyAsync())
                 {
-                    await context.Users.AddRangeAsync(GetPreConfiguredUsers());
-
-                    await context.SaveChangesAsync();
+                    await context.Users.AddRangeAsync(GetPreConfiguredUsers(context));
                 }
             }
             catch (Exception ex)
@@ -34,18 +24,17 @@ namespace ConsoleTagApp.Infrastructure.Data
                 {
                     retryForAvailbility++;
 
-                    //logger.LogError(ex.Message);
-                    await SeedAsyncData(context, /*logger,*/ retryForAvailbility);
+                    await SeedAsyncData(context, retryForAvailbility);
                 }
-                throw;
+
+                throw ex;
             }
         }
 
-        private static IEnumerable<Tag> GetPreConfiguredTags()
+        private static IEnumerable<Tag> GetPreConfiguredTags(ConsoleDbContext context)
         {
-            var roles = new List<Tag>
+            var tags = new List<Tag>
             {
-
                 new Tag { Value = "Art",        Domain = "Entertainment" },
                 new Tag { Value = "Photography",Domain = "Entertainment" },
                 new Tag { Value = "Fitness",    Domain = "Entertainment" },
@@ -69,12 +58,16 @@ namespace ConsoleTagApp.Infrastructure.Data
 
                 new Tag { Value = "Cooking",    Domain = "Food" },
             };
-            return roles;
+
+            context.Tags.AddRange(tags);
+            context.SaveChanges();
+
+            return tags;
         }
 
-        private static IEnumerable<User> GetPreConfiguredUsers()
+        private static IEnumerable<User> GetPreConfiguredUsers(ConsoleDbContext context)
         {
-            var tags = GetPreConfiguredTags().ToList();
+            var tags = GetPreConfiguredTags(context).ToList();
 
             var users = new List<User>
                 {
@@ -197,6 +190,10 @@ namespace ConsoleTagApp.Infrastructure.Data
                         }
                     },
                 };
+
+            context.Users.AddRange(users);
+            context.SaveChanges();
+
             return users;
         }
     }

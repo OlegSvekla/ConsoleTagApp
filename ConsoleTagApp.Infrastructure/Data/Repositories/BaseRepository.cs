@@ -86,25 +86,5 @@ namespace ConsoleTagApp.Infrastructure.Data.Repositories
 
             return model;
         }
-
-
-        public async Task<T> CreateAsync(T entity, CancellationToken cancellationToken = default)
-        {
-            await _table.AddAsync(entity, cancellationToken);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-            return entity;
-        }
-
-        public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
-        {
-            _dbContext.Attach(entity).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync(cancellationToken);
-        }
-
-        public async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
-        {
-            _table.Remove(entity);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-        }
     }
 }
