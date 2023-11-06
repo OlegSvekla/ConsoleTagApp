@@ -23,7 +23,7 @@ namespace ConsoleTagApp.Infrastructure.Data.Repositories
             _table = _dbContext.Set<T>();
         }
 
-        public IQueryable<T> GetOneByAsyncWithPagin(
+        public IQueryable<T> GetManyByAsync(
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
             Expression<Func<T, bool>> expression = null,
             CancellationToken cancellationToken = default)

@@ -24,33 +24,36 @@ namespace ConsoleTagApp.Bl.Services
 
         public async Task<User> GetUserByIdAndDomain(Guid userId, string domain)
         {
-            Expression<Func<User, bool>> filter = user => user.Id == userId && user.Domain == domain;
+            Expression<Func<User, bool>> filter = user => user.Id.Equals(userId) && user.Domain.Equals(domain);
 
-            return await _userRepository.GetOneByAsync(
-                include: users => users.Include(user => user.UserTags), expression: filter);//?
+            var user = await _userRepository.GetOneByAsync(
+                include: users => users.Include(user => user.UserTags), expression: filter);
+
+            return user; 
         }
 
         public async Task<List<User>> GetUsersByDomain(string domain, int page, int pageSize)
         {
-
-            return await _userRepository.GetOneByAsyncWithPagin(
+            var users = await _userRepository.GetManyByAsync(
                 include: query => query.Include(user => user.UserTags),
-                expression: user => user.Domain == domain,
+                expression: user => user.Domain.Equals(domain),
                 cancellationToken: default)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
+
+            return users;
         }
 
         public async Task<List<User>> GetUsersByTagAndDomain(string tagValue, string domain)
-        {
+        {            
             Expression<Func<User, bool>> filter = user =>
-                user.Domain == domain &&
-                user.UserTags.Any(tu => tu.Tag.Value == tagValue);
+                user.Domain.Equals(domain) &&
+                user.UserTags.Any(tu => tu.Tag.Value.Equals(tagValue));
 
-            var usersQuery = await _userRepository.GetAllByAsync(include: query => query.Include(user => user.UserTags), expression: filter);
+            var users = await _userRepository.GetAllByAsync(include: query => query.Include(user => user.UserTags), expression: filter);
 
-            return usersQuery.ToList();
+            return users.ToList();
         }
     }
 }
