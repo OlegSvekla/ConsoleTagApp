@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTagApp", "ConsoleTagApp\ConsoleTagApp.csproj", "{74EE53BA-9B1C-446E-B4BB-2C854B333023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTagApp", "src\ConsoleTagApp\ConsoleTagApp.csproj", "{74EE53BA-9B1C-446E-B4BB-2C854B333023}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7DE20E57-7277-4043-B505-C2776C0BC246}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTagApp.Bl", "ConsoleTagApp.Bl\ConsoleTagApp.Bl.csproj", "{DB6F7D78-9AB1-4322-894A-FA4E5B3039B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTagApp.Bl", "src\ConsoleTagApp.Bl\ConsoleTagApp.Bl.csproj", "{DB6F7D78-9AB1-4322-894A-FA4E5B3039B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTagApp.Infrastructure", "ConsoleTagApp.Infrastructure\ConsoleTagApp.Infrastructure.csproj", "{E44673D3-5124-461E-A814-559AB9C63C2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTagApp.Infrastructure", "src\ConsoleTagApp.Infrastructure\ConsoleTagApp.Infrastructure.csproj", "{E44673D3-5124-461E-A814-559AB9C63C2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTagApp.Domain", "ConsoleTagApp.Domain\ConsoleTagApp.Domain.csproj", "{2286BFEB-6EDA-46E6-A058-7587BBE290FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTagApp.Domain", "src\ConsoleTagApp.Domain\ConsoleTagApp.Domain.csproj", "{2286BFEB-6EDA-46E6-A058-7587BBE290FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
