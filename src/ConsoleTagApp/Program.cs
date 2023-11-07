@@ -19,8 +19,6 @@ namespace ConsoleTagApp
             var messageReader = scope.ServiceProvider.GetRequiredService<IMessageReader>();
             var context = scope.ServiceProvider.GetRequiredService<ConsoleDbContext>();
 
-
-
             while (true)
             {
                 Console.WriteLine("Select an action:");
