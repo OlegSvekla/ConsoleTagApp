@@ -23,6 +23,26 @@ namespace ConsoleTagApp.Infrastructure.Data.Repositories
             _table = _dbContext.Set<T>();
         }
 
+        public IQueryable<T> GetManyByAsync(
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            Expression<Func<T, bool>> expression = null,
+            CancellationToken cancellationToken = default)
+        {
+            IQueryable<T> query = _table;
+
+            if (expression is not null)
+            {
+                query = query.Where(expression);
+            }
+
+            if (include is not null)
+            {
+                query = include(query);
+            }
+
+            return query.AsNoTracking();
+        }
+
         public async Task<IEnumerable<T>> GetAllByAsync(Func<IQueryable<T>,
             IIncludableQueryable<T, object>> include = null,
             Expression<Func<T, bool>> expression = null,
@@ -65,26 +85,6 @@ namespace ConsoleTagApp.Infrastructure.Data.Repositories
                                    .FirstOrDefaultAsync(cancellationToken);
 
             return model;
-        }
-
-
-        public async Task<T> CreateAsync(T entity, CancellationToken cancellationToken = default)
-        {
-            await _table.AddAsync(entity, cancellationToken);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-            return entity;
-        }
-
-        public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
-        {
-            _dbContext.Attach(entity).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync(cancellationToken);
-        }
-
-        public async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
-        {
-            _table.Remove(entity);
-            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

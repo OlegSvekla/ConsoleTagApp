@@ -11,6 +11,11 @@ namespace ConsoleTagApp.Domain.Interfaces.IRepositories
 {
     public interface IBaseRepository<T> where T : BaseEntity
     {
+        IQueryable<T> GetManyByAsync(
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            Expression<Func<T, bool>> expression = null,
+            CancellationToken cancellationToken = default);
+
         Task<IEnumerable<T>> GetAllByAsync(Func<IQueryable<T>,
             IIncludableQueryable<T, object>>? include = null,
             Expression<Func<T, bool>>? expression = null,
@@ -20,11 +25,5 @@ namespace ConsoleTagApp.Domain.Interfaces.IRepositories
             IIncludableQueryable<T, object>>? include = null,
             Expression<Func<T, bool>>? expression = null,
             CancellationToken cancellationToken = default);
-
-        Task<T> CreateAsync(T entity, CancellationToken cancellationToken = default);
-
-        Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
-
-        Task DeleteAsync(T entity, CancellationToken cancellationToken = default);
     }
 }
