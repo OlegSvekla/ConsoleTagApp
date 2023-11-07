@@ -1,7 +1,7 @@
 ﻿using ConsoleTagApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
+
 
 namespace ConsoleTagApp.Extensions
 {
@@ -22,7 +22,7 @@ namespace ConsoleTagApp.Extensions
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "An error occurred while seeding the database.");
+                    throw ex;
                 }
             }
             return app;

@@ -1,14 +1,8 @@
-﻿using ConsoleTagApp.Bl.Services;
-using ConsoleTagApp.Domain.Entities;
-using ConsoleTagApp.Domain.Interfaces.IRepositories;
+﻿using ConsoleTagApp.Domain.Entities;
 using ConsoleTagApp.Domain.Interfaces.IServices;
 using ConsoleTagApp.Extensions;
 using ConsoleTagApp.Infrastructure.Data;
-using ConsoleTagApp.Infrastructure.Data.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
 
 namespace ConsoleTagApp
 {

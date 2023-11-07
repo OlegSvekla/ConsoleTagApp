@@ -6,13 +6,7 @@ using ConsoleTagApp.Infrastructure.Data.Repositories;
 using ConsoleTagApp.Infrastructure.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
 
 namespace ConsoleTagApp.Extensions
 {
