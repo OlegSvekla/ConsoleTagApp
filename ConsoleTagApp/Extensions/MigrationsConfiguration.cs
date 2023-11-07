@@ -1,11 +1,7 @@
 ﻿using ConsoleTagApp.Infrastructure.Data;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Extensions.Logging;
-using System;
 
 namespace ConsoleTagApp.Extensions
 {

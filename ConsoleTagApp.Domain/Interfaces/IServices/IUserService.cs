@@ -9,8 +9,9 @@ namespace ConsoleTagApp.Domain.Interfaces.IServices
 {
     public interface IUserService<T> where T : class
     {
-        Task<T> GetUserByIdAndDomain(Guid userId, string domain);
-        Task<List<T>> GetUsersByDomain(string domain, int page, int pageSize);
-        Task<List<T>> GetUsersByTagAndDomain(string tagValue, string domain);
+        Task<T> GetUserByIdAndDomainAsync(Guid userId, string domain);
+        Task<List<T>> GetUsersByDomainAsync(string domain, int page, int pageSize);
+        Task<List<T>> GetUsersByTagAndDomainAsync(string tagValue, string domain);
+        Task<int> GetUsersCountByDomainAsync(string domain);
     }
 }
