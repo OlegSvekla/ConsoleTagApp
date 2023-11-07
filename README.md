@@ -1,7 +1,7 @@
 # ConsoleTagApp
 
 # About project :
-- Structuring project states (work flow) : сreated a dev branch based on main and some branches based on dev, depending on what feature I added.![Логотип моего проекта](src/ConsoleTagApp/ConsoleTagApp.Domain/Pictures/Screenshot_31.png)
+- Structuring project states (work flow) : сreated a dev branch based on main and some branches based on dev, depending on what feature I added.![Логотип моего проекта](ConsoleTagApp\src\ConsoleTagApp.Domain\Pictures\Screenshot_31.png)
 - Project structure : we have four projects like Domain, BusinessLogic (Bl), Infrustructure and Console app.![Логотип моего проекта](src/ConsoleTagApp/ConsoleTagApp.Domain/Pictures/Screenshot_1.png)
 - Task 1 : there is a method that takes a file from user and reads sequential messages (data packets) from the input byte stream (Stream) and uses the using construct to quickly release resources.![Логотип моего проекта](src/ConsoleTagApp/ConsoleTagApp.Domain/Pictures/Screenshot_2.png)![Логотип моего проекта](src/ConsoleTagApp/ConsoleTagApp.Domain/Pictures/Screenshot_3.png)
 - Task 2.1 : there is a method that allows you to select a user (with his tags) by his Id and Domain ![Логотип моего проекта](src/ConsoleTagApp/ConsoleTagApp.Domain/Pictures/Screenshot_10.png)![Логотип моего проекта](src/ConsoleTagApp/ConsoleTagApp.Domain/Pictures/Screenshot_6.png)
